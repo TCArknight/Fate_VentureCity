@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document signature="Hero Lab Data">
+  <thing id="camVenCity" name="Venture City" description="The Venture CIty superheroes campaign from Evil Hat." compset="Campaign" uniqueness="unique">
+    <fieldval field="camSklCap" value="4"/>
+    <fieldval field="camDefStrs" value="2"/>
+    <fieldval field="camStunts" value="6"/>
+    <usesource source="srcVenCity"/>
+    <tag group="Skill" tag="skDeceit" name="Deceive" abbrev="Deceive"/>
+    <tag group="Skill" tag="skDrive" name="Drive" abbrev="Drive"/>
+    <tag group="Skill" tag="skEmpathy" name="Empathy" abbrev="Empathy"/>
+    <tag group="Skill" tag="skFight" name="Fight" abbrev="Fight"/>
+    <tag group="Skill" tag="skInvest" name="Investigate" abbrev="Investigate"/>
+    <tag group="Skill" tag="skLore" name="Lore" abbrev="Lore"/>
+    <tag group="Skill" tag="skNotice" name="Notice" abbrev="Notice"/>
+    <tag group="Skill" tag="skPhysique" name="Physique" abbrev="Physique"/>
+    <tag group="Skill" tag="skProvoke" name="Provoke" abbrev="Provoke"/>
+    <tag group="Skill" tag="skRapport" name="Rapport" abbrev="Rapport"/>
+    <tag group="Skill" tag="skResource" name="Resources" abbrev="Resources"/>
+    <tag group="Skill" tag="skShoot" name="Shoot" abbrev="Shoot"/>
+    <tag group="Skill" tag="skStealth" name="Stealth" abbrev="Stealth"/>
+    <tag group="Skill" tag="skWill" name="Will" abbrev="Will"/>
+    <tag group="SocInit" tag="skEmpathy" name="Empathy" abbrev="Empathy"/>
+    <tag group="Campaign" tag="SkillPyr" name="Skill Pyramid" abbrev="Skill Pyramid"/>
+    <tag group="PhysInit" tag="skNotice" name="Notice" abbrev="Notice"/>
+    <tag group="Skill" tag="skAthletic" name="Athletics" abbrev="Athletics"/>
+    <tag group="Skill" tag="skContact" name="Contacts" abbrev="Contacts"/>
+    <tag group="Skill" tag="skBurglary" name="Burglary" abbrev="Burglary"/>
+    <tag group="Skill" tag="skCrafts" name="Crafts" abbrev="Crafts"/>
+    <bootstrap thing="strPhys"></bootstrap>
+    <bootstrap thing="strMental"></bootstrap>
+    </thing>
+  <thing id="mecVenCity" name="Venture City Setting" compset="Mechanics">
+    <usesource source="srcVenCity"/>
+    <eval phase="Initialize"><![CDATA[herofield[acCampaign].text = "<Choose Me>"
+
+~Assign VenCity.Visible tag to reveal setting-specific Tabs
+perform hero.assign[VenCity.Visible]]]></eval>
+    </thing>
+  <preclude id="camColumns" source="srcVenCity"/>
+  <preclude id="camFatCore" source="srcVenCity"/>
+  <preclude id="camSpirit" source="srcVenCity"/>
+  <preclude id="camAccel" source="srcVenCity"/>
+  </document>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- This file contains the definition of a traditional "statblock" output for the
+      game system. The statblock is defined as a dossier and then uses an assortment
+      of procedures to orchestrate the synthesis of the output.
+-->
+
+<document signature="Hero Lab Data">
+
+  <procedure id="sbskills" scripttype="synthesize"><![CDATA[
+    var ismore as number
+    var myrank as number
+    var rankCheck as number
+    append @newline & @boldon & "Skills: " & @boldoff 
+    ~output a list of all Skills with +1 or higher rating
+    ismore = 0
+    rankCheck = 8
+    
+    while (rankCheck > 0)
+      foreach pick in hero where "component.Skill"
+        myrank = eachpick.field[trtFinal].value
+      
+        if (myrank = rankCheck) then
+          if (ismore <> 0) then
+            append "; "
+            endif
+          append eachpick.field[shortname].text & " (+" & myrank & ")"
+          ismore = 1      
+          endif
+        
+        nexteach
+        rankCheck -= 1
+      loop
+      
+    ]]></procedure>
+
+  <procedure id="sbpowers" scripttype="synthesize"><![CDATA[
+    var ismore as number
+    var myLen as number
+    var myPower as string
+    var trimmed as string
+
+    append  @newline & @boldon & "Powers: " & @boldoff &  @newline 
+    
+    ~output a list of all Powers
+    ismore = 0
+    
+    foreach pick in hero from vcSuite
+      myPower = ""
+      trimmed = ""
+      myLen = 0      
+      
+      myPower = eachpick.field[name].text
+      myLen = length(myPower)   
+      ~trimmed = mid(myPower,6,myLen)
+
+      append myPower & " (" 
+      
+      foreach pick in eachpick.gizmo from vcPower
+        if (ismore > 0) then
+          append ", "
+          endif
+        append eachpick.field[name].text
+        ismore += 1
+        nexteach
+        
+      append " "
+      append ")"
+                   
+      ismore = 1
+      
+      nexteach
+            
+    append @newline
+      
+    ]]></procedure>
+
+  <procedure id="sbstunts" scripttype="synthesize"><![CDATA[
+    var ismore as number
+
+    append @newline & @boldon & "Stunts: " & @boldoff 
+
+    ismore = 0
+    
+    foreach pick in hero where "component.Stunt"
+      
+      if (ismore <> 0) then
+        append "; "
+        endif
+
+      append eachpick.field[name].text
+
+      ismore = 1      
+        
+      nexteach
+      
+    ]]></procedure>
+    
+
+  <!-- Define the statblock as a text-based dossier. The "synthesize" script actually
+        generates the output.
+  -->
+  <dossier
+    id="vstatblock"
+    name="Venture City Character Statblock">
+    <dossier_text
+      styles="print+plain+html+bbcode"
+      grouping="statblock">
+      <synthesize><![CDATA[
+        var txt as string
+        var tagexpr as string
+
+        ~start by getting our name
+        var name as string
+        call sbname
+
+        ~output our name
+        append @boldon & "Name: " & @boldoff & name & @newline
+
+        ~append Refresh
+        append @newline & @boldon & "Refresh Rate: " & @boldoff & herofield[acFateRefR].value 
+        
+        ~get Fate Points from tracker
+        foreach pick in hero where "component.Tracker & thingid.trkFate"
+          append @newline & @boldon & "Fate Points: " & @boldoff 
+          append eachpick.field[trkUser].value & @newline
+          nexteach 
+
+        ~output aspects
+        append @newline & @boldon & "Aspects: " & @boldoff
+        tagexpr = "component.Aspect"
+        call sbaspects
+        
+        ~output attributes
+        ~append @newline & @boldon & "Attributes: " & @boldoff
+        ~tagexpr = "component.Attribute"
+        ~call sbtraits
+
+        ~output skills
+        call sbskills
+
+        ~output powers
+        append @newline
+        call sbpowers
+        
+        ~output special abilities
+        ~append @boldon & "Special Abilities: " & @boldoff
+        ~tagexpr = "component.Ability"
+        ~call sbtraits
+
+        ~output stunts
+        call sbstunts
+        
+        ~output derived traits
+        foreach pick in hero where "component.Derived" sortas explicit
+          append @boldon & eachpick.field[name].text & ": " & @boldoff & eachpick.field[trtFinal].text & @newline
+          nexteach
+
+        ~output weapons/attacks
+        ~call sbweapons
+
+        ~output armor
+        ~call sbarmor
+        append @newline
+        
+        ]]></synthesize>
+      </dossier_text>
+    </dossier>
+
+
+  </document>

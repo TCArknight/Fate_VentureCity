@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains the definitions of how the Editor should handle all the
+      various publicly accessible objects (i.e. component sets) within the game
+      system. A separate "editthing" elemenet is defined for each component set,
+      along with the appropriate details for how to configure each facet via
+      "inputthing" elements.
+-->
+
+<document signature="Hero Lab Data">
+
+  <!-- Form editthing -->
+  <editthing
+    group="Venture City"
+    compset="Power"
+    name="Power (Venture CIty)"
+    prefix="pwr"
+	defchild="entEnhance"
+    description="Powers are a lot like stunts, except bigger, flashier, more powerful, and more complex. Powers are displayed on the Powers tab."
+    summary="Defines a Power.">
+    <inputthing
+      name="Focus Required?"
+      helptext="Specify whether this Form requires the user to specify a focus (e.g. Knowledge).">
+      <it_tagcheck group="User" tag="NeedDomain"/>
+      </inputthing>
+    
+    </editthing>
+
+
+  </document>

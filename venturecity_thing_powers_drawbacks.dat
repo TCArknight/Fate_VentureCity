@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- This file contains the assortment of skills for the game system. Note that each
+      skill is linked to an associated attribute for the character. This linkage allows
+      the value of the skill to easily incorporate the effects of the linked attribute
+      via a script on the component.
+-->
+
+<document signature="Hero Lab Data">
+  <!-- Separator Components -->
+  <thing
+    id="SepDrawbac"
+    name="- Drawbacks -"
+    compset="PowerComp"
+    isshowonly="yes"
+    description="">
+    <tag group="PowerComp" tag="Drawback"/>
+    <tag group="VenCity" tag="Seperate"/>
+    </thing>
+
+  <!-- Drawbacks -->
+  <thing
+    id="draTMNST"
+    name="The Machines Never Stop Talking"
+    compset="Drawback"
+    isunique="yes"
+    description="Because you have a bond with machinery, it has a bond with you. In a technologically advanced city, that means {b}The Machines Never Stop Talking!{/b}">
+    <tag group="VenCity" tag="Drawback"/>
+    <tag group="Drawback" tag="pwrMacCon"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+    
+  <thing
+    id="draUnwMen"
+    name="Unwanted Menagerie"
+    compset="Drawback"
+    isunique="yes"
+    description="Your animal friends don’t just like you, they love you, and want to be around you all the time. You have an {b}Unwanted Menagerie{/b} at all times.">
+    <tag group="VenCity" tag="Drawback"/>
+    <tag group="Drawback" tag="pwrAniCon"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+    
+  <thing
+    id="draOvAnIn"
+    name="Overwhelming Animal Instincts"
+    compset="Drawback"
+    isunique="yes"
+    description="Your connection to the minds of animals works both ways: their psyches rub off on you, and you need to contend with {b}Overwhelming Animal Instincts{/b}.">
+    <tag group="VenCity" tag="Drawback"/>
+    <tag group="Drawback" tag="pwrAniCon"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+    
+  <thing
+    id="draNoUsIn"
+    name="Not Useful Indoors"
+    compset="Drawback"
+    isunique="yes"
+    description="You have control over an animal with certain environmental needs (say fish, or hawks) which means your powers are {b}Not Useful Indoors{/b}.">
+    <tag group="VenCity" tag="Drawback"/>
+    <tag group="Drawback" tag="pwrAniCon"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+    
+  <thing
+    id="draHaMiOfO"
+    name="It Has A Mind Of Its Own"
+    compset="Drawback"
+    isunique="yes"
+    description="The thing you summon is not quite as under your control as you’d like people to think. You can tell it what to do, but {b}It Has a Mind of Its Own{/b}.">
+    <tag group="VenCity" tag="Drawback"/>
+    <tag group="Drawback" tag="pwrCreaSum"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+    
+  <thing
+    id="draLivNig"
+    name="It Looks Like A Living Nightmare"
+    compset="Drawback"
+    isunique="yes"
+    description="Your little summoned buddy might be as friendly as anything, but since {b}It Looks Like a Living Nightmare{/b}, people tend to freak out.">
+    <tag group="VenCity" tag="Drawback"/>
+    <tag group="Drawback" tag="pwrCreaSum"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+    
+  <thing
+    id="draCantRid"
+    name="Can't Get Rid of Your Creature"
+    compset="Drawback"
+    isunique="yes"
+    description="Saying you choose to summon your creature isn’t quite right. It’s more accurate to say that you {b}Can’t Get Rid of Your Creature{/b}, no matter how hard you try.">
+    <tag group="VenCity" tag="Drawback"/>
+    <tag group="Drawback" tag="pwrCreaSum"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+    
+  <thing
+    id="draInhVis"
+    name="Inhuman Visage"
+    compset="Drawback"
+    isunique="yes"
+    description="There’s a reason you spend most or all of your time wearing someone else’s face: your own is an {b}Inhuman Visage{/b}.">
+    <tag group="VenCity" tag="Drawback"/>
+    <tag group="Drawback" tag="pwrDisguis"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+    
+  <thing
+    id="draDoKnWh"
+    name="Don't Know Who You Are Anymore"
+    compset="Drawback"
+    isunique="yes"
+    description="Too much time spent being someone else. Too many faces, too many lives. You’ve reached the point where you {b}Don’t Know Who You Are Anymore{/b}.">
+    <tag group="VenCity" tag="Drawback"/>
+    <tag group="Drawback" tag="pwrDisguis"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+    
+  <thing
+    id="draTouAct"
+    name="Touch Activated"
+    compset="Drawback"
+    isunique="yes"
+    description="You can’t consciously control the way your face changes. Instead, your power is {b}Touch-Activated{/b}; it only triggers when you physically touch your target.">
+    <tag group="VenCity" tag="Drawback"/>
+    <tag group="Drawback" tag="pwrDisguis"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+	
+	
+	
+  </document>

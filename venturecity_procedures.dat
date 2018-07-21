@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- This file contains the definitions of assorted procedures that are used
+      throughout the data files. Since procedures are typically called from multiple
+      places, it usually makes sense to put them all in one central location where
+      you can always find them instead of having them littered throughout the data
+      files and hard to locate when you need to refer to them.
+  -->
+
+<document signature="Hero Lab Data">
+
+<!-- ##################
+      The following procedures are for output of the descriptions
+     ##################
+-->
+  <!-- Procedure PwrInfo
+        Synthesize a detailed description for Powers. The generated text is
+        placed in the "infotext" variable. If special spacing needs to be
+        inserted between sections of the output, the caller can dictate 
+        that via the "spacing" variable.
+
+        Inbound parameter:  spacing, showdesc
+        Outbound parameter: infotext
+  -->
+  <procedure id="PwrInfo" context="pick"><![CDATA[
+    ~declare variables that are used to communicate with our caller
+    var spacing as string
+    var showdesc as string
+    
+    ~infotext is passed back to the Suite's description
+    var infotext as string
+    
+    ~myBreak contains the Power Breakdown information
+    var myBreak as string
+    
+    ~myDesc holds the power description built up from the powers and any enhancements
+    var myDesc as string 
+
+   ~var test as string
+    
+    var thisGiz1 as string
+    var lastGiz1 as string
+    var thisGiz2 as string
+    var lastGiz2 as string
+        
+    var myTag as string
+    var pwrCount as number
+    var enhCount as number
+    var sfxCount as number
+    
+    pwrCount = 0
+    enhCount = 0
+    sfxCount = 0
+    
+    ~start with left-aligned text and append the descriptions
+    myDesc = "{align left}"
+    myBreak = "{align left}"
+    
+    myBreak &= "{br}" & "{br}"
+    myBreak &= "{i}Power Breakdown"
+      
+    foreach pick in gizmo from vcPower
+      pwrCount += 1
+      ~get the name of each Power in the Suite
+	  thisGiz1 = eachpick.field[name].text
+	  
+      ~get the description from each power into myDesc
+	  if (compare(showdesc,"true") = 0) then
+	    myDesc &= eachpick.field[pwrDesc].text
+	    endif
+          
+      ~if the current power is the same name as the last one, 
+      ~increment it, otherwise add it to the breakdown  
+	  if (compare(thisGiz1,lastGiz1) = 0) then
+	    myBreak &= " x"
+	    myBreak &= pwrCount
+	  else 
+	    myBreak &= "{br}{horz 10}" & thisGiz1
+	    endif
+	    
+	  if (eachpick.isgizmo <> 0) then
+	    ~get info from enhancements on power
+        foreach pick in eachpick.gizmo from vcEnhance
+          enhCount += 1
+          thisGiz2 = eachpick.field[name].text
+          
+          ~if Enhancement doesn't have the Power.NoDesc tag, 
+          ~add it's description into the powers description 
+          if (eachpick.tagis[Power.NoDesc] = 0) then
+            myDesc &= eachpick.field[enhDesc].text
+            endif
+              
+	      myDesc &= " "
+	      
+         ~if the current enhancement is the same name as the last one, 
+         ~increment it, otherwise add it to the breakdown  	        
+	      if (compare(thisGiz2,lastGiz2) = 0) then
+	        myBreak &= " x" & enhCount
+	      else 
+	        myBreak &= "{br}{horz 20}" & thisGiz2
+	        enhCount = 0 
+	        endif
+          
+          lastGiz2 = thisGiz2
+          nexteach
+        endif
+    
+	  lastGiz1 = thisGiz1
+	  nexteach
+	    
+      myBreak &= "{/i}{br}{br}"
+      myBreak &= "{i}Special Effects: "
+
+      foreach pick in gizmo from vcSpecEff
+	    thisGiz1 = eachpick.field[name].text
+           
+	    myDesc &= " "
+	    sfxCount += 1
+	    if (sfxCount > 1) then
+	      myBreak &= ", "
+	      endif
+	    
+	    myBreak &= thisGiz1
+	          
+	    nexteach
+
+      myBreak &= "{/i}{br}{br}"
+      myBreak &= "{i}Drawback: "
+      
+      foreach pick in gizmo from vcDrawback
+	    thisGiz1 = eachpick.field[draDesc].text
+	    myBreak &= thisGiz1
+	    
+	    nexteach 
+	    
+      myBreak &= "{/i}{br}{br}"
+      myBreak &= "{i}Collateral Damage: "
+      	     
+      foreach pick in gizmo from vcCollDmg
+	    thisGiz1 = eachpick.field[cdDesc].text
+        myBreak &= thisGiz1
+	    
+	    nexteach    
+
+      myBreak &= "{/i}{/i}"
+      
+      ~infotext should have the Description, then the breakdown
+      infotext = myDesc & myBreak
+      
+    ]]></procedure>
+  <!-- Procedure PwrSumm
+        Synthesize a description for Powers on the summary tab. The generated text is
+        placed in the "infotext" variable. If special spacing needs to be
+        inserted between sections of the output, the caller can dictate 
+        that via the "spacing" variable.
+
+        Inbound parameter:  spacing
+        Outbound parameter: infotext
+  -->
+  <procedure id="PwrSumm" context="pick"><![CDATA[
+    ~declare variables that are used to communicate with our caller
+    var spacing as string
+    var infotext as string
+    var test as string
+    var thisGiz1 as string
+    var lastGiz1 as string
+    var thisGiz2 as string
+    var lastGiz2 as string
+    var myDesc as string
+    var myTag as string
+    var myCount as number
+    
+    test = field[name].text
+    ~notify test
+    
+    ~start with left-aligned text and append the descriptions
+    infotext = "{align left}"
+    myDesc = ""
+    
+    foreach pick in gizmo from vcPower
+      thisGiz1 = eachpick.field[name].text
+        
+	  if (compare(thisGiz1,lastGiz1) = 0) then
+	    infotext &= " x2"
+	  else 
+	    infotext &= "{br}" & thisGiz1
+	    endif
+	  
+	  if (eachpick.isgizmo <> 0) then
+	    ~get info from enhancements on power
+        foreach pick in eachpick.gizmo from vcEnhance
+          myCount = eachpick.countme
+          thisGiz2 = eachpick.field[name].text
+          
+	      if (compare(thisGiz2,lastGiz2) = 0) then
+	        infotext &= " x" & eachpick.countme
+	      else 
+	        infotext &= "{br}  + " & thisGiz2
+	        endif
+          
+          lastGiz2 = thisGiz2
+          nexteach
+        endif
+    
+	  lastGiz1 = thisGiz1
+	  nexteach
+	    
+    infotext &= "{br}{br}"
+    infotext &= "Special Effects: "
+
+    var i as number
+    i=0
+      
+    foreach pick in gizmo from vcSpecEff
+      thisGiz1 = eachpick.field[name].text
+           
+	  myDesc &= " "
+	  i += 1
+	  if (i > 1) then
+	    infotext &= ", "
+	    endif
+	          
+	  if (compare(thisGiz1,lastGiz1) = 0) then
+	    infotext &= " x2"
+	  else 
+	    infotext &= thisGiz1
+	    endif
+    
+	  lastGiz1 = thisGiz1
+	  
+	  nexteach
+
+    infotext &= "{br}"
+    infotext &= "Drawback: "
+
+    i=0
+      
+    foreach pick in gizmo from vcDrawback
+      thisGiz1 = eachpick.field[name].text
+           
+	  myDesc &= " "
+	  i += 1
+	  if (i > 1) then
+	    infotext &= ", "
+	    endif
+	          
+	  if (compare(thisGiz1,lastGiz1) = 0) then
+	    infotext &= " x2"
+	  else 
+	    infotext &= thisGiz1
+	    endif
+    
+	  lastGiz1 = thisGiz1
+	  
+	  nexteach
+
+    infotext &= "{br}"
+    infotext &= "Col. Dam.: "
+
+    i=0
+      
+    foreach pick in gizmo from vcCollDmg
+      thisGiz1 = eachpick.field[name].text
+           
+	  myDesc &= " "
+	  i += 1
+	  if (i > 1) then
+	    infotext &= ", "
+	    endif
+	          
+	  if (compare(thisGiz1,lastGiz1) = 0) then
+	    infotext &= " x2"
+	  else 
+	    infotext &= thisGiz1
+	    endif
+    
+	  lastGiz1 = thisGiz1
+	  
+	  nexteach
+
+    infotext &= "{br}"
+
+    ]]></procedure>
+        
+<!-- ##################
+      The following procedures are generic and used in various places
+     ##################
+-->
+  <!-- Script used to set up Power selection
+  -->
+  <procedure id="SetPwrExpr" context="pick"><![CDATA[
+    ~make sure there's a gizmo to travel to
+    doneif (isgizmo = 0)
+    
+    ~set up our tag expression for selecting appropriate Traits
+    var expr as string
+    var myId as string
+    var pwrIds as string
+    var HasPwrs as string
+    var HdrStr as string
+    var PwrStr as string
+    var SfxStr as string
+    var DrawStr as string
+    var CollStr as string
+
+    expr = "component.PowerComp" 
+    expr = ""
+    
+	~set up Drawbacks to be selected
+    pwrIds = tagids[HasPower.?,"|"]
+    HasPwrs = replace(pwrIds,"HasPower","Drawback",0)
+    
+    if (empty(myId) <> 0) then
+      ~do nothing
+    else
+        expr &= " & (" & myId & ")"
+    endif
+    
+    if (empty(HasPwrs) <> 0) then
+      ~do nothing
+    else
+        DrawStr &= " | (VenCity.Drawback & (" & HasPwrs & "))"
+    endif  
+ 
+ 	~set up Drawbacks to be selected
+    pwrIds = tagids[HasPower.?,"|"]
+    HasPwrs = replace(pwrIds,"HasPower","CollDmg",0)
+    
+    if (empty(myId) <> 0) then
+      ~do nothing
+    else
+        expr &= " & (" & myId & ")"
+    endif
+    
+    if (empty(HasPwrs) <> 0) then
+      ~do nothing
+    else
+        CollStr &= " | (VenCity.CollDmg & (" & HasPwrs & "))"
+    endif
+       
+    HdrStr = "VenCity.Seperate"
+    PwrStr = " | VenCity.Power"
+    SfxStr = " | VenCity.SpecEff"
+    
+    expr &= HdrStr & PwrStr & SfxStr & DrawStr & CollStr
+    
+    ~notify expr
+    
+    gizmo.childfound[PwrHelper].field[PowerExpr].text = expr
+    ]]></procedure>
+  
+  <!-- Script used to set up Enhancement selection
+  -->
+  <procedure id="SetEnhExpr" context="pick"><![CDATA[
+    ~make sure there's a gizmo to travel to
+    doneif (isgizmo = 0)
+    
+    ~set up our tag expression for selecting appropriate Traits
+    var expr as string
+    var myId as string
+
+    expr = "component.vcEnhance" 
+
+    if (empty(myId) <> 0) then
+      ~do nothing
+    else
+        expr &= "& (  " & myId & ")"
+    endif
+    
+    gizmo.childfound[EnhHelper].field[EnhExpr].text = expr
+    ]]></procedure>
+  </document>

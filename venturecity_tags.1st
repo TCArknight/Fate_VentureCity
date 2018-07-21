@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- This file contains the definitions of all tag groups and tags that are used
+      throughout the Skeleton data files. These elements relied upon by numerous
+      other facets of the data files and must be processed first during compilation,
+      so they are placed in a file with a ".1st" extension.
+-->
+
+<document signature="Hero Lab Structure">
+
+  <!-- The "group" elements define tag groups that consist of an assortment of tags.
+        These tags can be assigned throughout the data files and referenced via scripts
+        and tag expressions to orchestrate all the behaviors you need.
+  -->
+
+  <group
+    id="Power"
+    dynamic="yes">
+    <value id="CustPower"/>  <!-- Identifies a thing that has a user customizable name -->
+    <value id="NoDesc"/>     <!-- Identifies a thing that doesn't include it's description in the pverall power description -->
+    </group>
+    
+  <group
+    id="Enhance"
+    dynamic="yes">
+    <value id="CustEnh"/>  <!-- Identifies a thing that has a user customizable name -->
+    </group>
+    
+  <group
+    id="SpecEff"
+    dynamic="yes">
+    <value id="CustSFX"/>   <!-- Identifies a thing that has a user customizable name -->
+    <value id="Improved"/>  <!-- Identifies a Special Effect that is considered an Improved Special Effect -->
+    </group>
+    
+  <group
+    id="Drawback"
+    dynamic="yes">
+    <value id="CustEnh"/>  <!-- Identifies a thing that has a user customizable name -->
+    </group> 
+
+  <group
+    id="CollDmg"
+    dynamic="yes">
+    <value id="CustEnh"/>  <!-- Identifies a thing that has a user customizable name -->
+    </group> 
+                   
+  <group
+    id="VenCity">
+    <value id="Move"/>      <!-- Identifies the Move tracker -->
+    <value id="Visible"/>   <!-- Used to reveal specific Tabs -->
+    <value id="Seperate"/>  <!-- Used to indicate a seperator entry for selection form -->
+    <value id="Power"/>     <!-- Used to indicate a Power thing -->
+    <value id="Enhance"/>   <!-- Used to indicate a Power Enhancement thing -->            
+    <value id="SpecEff"/>   <!-- Used to indicate a Special Effect thing -->            
+    <value id="Drawback"/>  <!-- Used to indicate a Drawback thing -->            
+    <value id="CollDmg"/>   <!-- Used to indicate a Collateral Damage thing -->            
+    <value id="FirstCopy"/> <!-- Used to indicate first of multiple copies -->
+    </group>
+  
+  <group
+    id="Move">
+    <value id="Move"/>      <!-- Increments the Move tracker -->
+    </group>
+ 
+  <!-- PowerComp group - Power Components
+  -->
+  <group
+    id="PowerComp"
+    dynamic="yes"
+    sequence="explicit">
+    <value id="Power" order="10"/>
+    <value id="SpecEff" order="20"/>
+    <value id="Drawback" order="30"/>
+    <value id="CollDmg" order="40"/>
+    </group>    
+  </document>

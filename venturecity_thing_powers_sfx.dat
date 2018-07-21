@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- This file contains the assortment of skills for the game system. Note that each
+      skill is linked to an associated attribute for the character. This linkage allows
+      the value of the skill to easily incorporate the effects of the linked attribute
+      via a script on the component.
+-->
+
+<document signature="Hero Lab Data">
+  <!-- Separator Components -->
+  <thing
+    id="SepSpecEff"
+    name="- Special Effects -"
+    compset="PowerComp"
+    isshowonly="yes"
+    description="">
+    <tag group="PowerComp" tag="SpecEff"/>
+    <tag group="VenCity" tag="Seperate"/>
+    </thing>
+
+  <!-- Special Effects -->        
+  <thing
+    id="sfxForMov"
+    name="Forced Movement"
+    compset="SpecEff"
+    isunique="yes"
+    description="You move your target up to two zones.">
+    <tag group="VenCity" tag="SpecEff"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>         
+    
+  <thing
+    id="sfxAreaAtt"
+    name="Area Attack"
+    compset="SpecEff"
+    isunique="yes"
+    description="Attack everyone in a zone.">
+    <tag group="VenCity" tag="SpecEff"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+    
+  <thing
+    id="sfxInfCond"
+    name="Inflict Condition"
+    compset="SpecEff"
+    isunique="yes"
+    description="You add an aspect to the target, which you can invoke once for free.">
+    <tag group="VenCity" tag="SpecEff"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+    
+  <thing
+    id="sfxExtMove"
+    name="Extra Movement"
+    compset="SpecEff"
+    isunique="yes"
+    description="You can move up to two zones for free.">
+    <tag group="VenCity" tag="SpecEff"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+    
+  <thing
+    id="sfxPhyRec"
+    name="Physical Recovery"
+    compset="SpecEff"
+    isunique="yes"
+    description="You recover from all physical stress.">
+    <tag group="VenCity" tag="SpecEff"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+    
+  <thing
+    id="sfxMenRec"
+    name="Mental Recovery"
+    compset="SpecEff"
+    isunique="yes"
+    description="You recover from all mental stress.">
+    <tag group="VenCity" tag="SpecEff"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>    
+    
+  <thing
+    id="sfxExtAct"
+    name="Extra Action"
+    compset="SpecEff"
+    isunique="yes"
+    description="You can split your shifts between two different yet related actions, adding a +1 to each action.">
+    <tag group="VenCity" tag="SpecEff"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>    
+
+  </document>

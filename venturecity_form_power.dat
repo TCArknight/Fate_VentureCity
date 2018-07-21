@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<document signature="Hero Lab Data">
+
+  <portal
+    id="prtPower"
+    style="tblInvis">
+    <table_dynamic
+      component="PowerComp"
+      showtemplate="tmpShowPwr"
+      showsortset="PowerComp"
+      choosetemplate="tmpPickPwr"
+      choosesortset="PowerComp"
+      scrollable="yes"
+      alwaysupdate="yes"
+      candidatepick="PwrHelper"
+      candidatefield="PowerExpr"
+      addpick="PwrHelper"
+      headerpick="PwrHelper">
+      <headertitle>
+        @text = "Select Power Components"
+        </headertitle>
+      <additem><![CDATA[
+        @text = "Add Power Component"
+        ]]>
+        </additem>
+      </table_dynamic>      
+    </portal>
+    
+  <template
+    id="tmpPickPwr"
+    name="Power Pick"
+    compset="PowerComp"
+    marginhorz="3"
+    marginvert="1">
+
+    <portal
+      id="name"
+      style="lblSmall">
+      <label>
+         <labeltext><![CDATA[
+            @text = field[name].text
+            ]]>
+            </labeltext>
+        </label>
+      </portal>
+      
+    <position><![CDATA[
+    
+      ~set up our height based on our tallest portal
+      height = portal[name].height
+
+      ~if this is a "sizing" calculation, we're done
+      doneif (issizing <> 0)
+
+      ~position our tallest portal at the top
+      portal[name].top = 0
+      
+      ~position the name on the left and let it use all available space
+      portal[name].width = width
+        
+      ]]></position>
+    </template>
+    
+  <template
+    id="tmpShowPwr"
+    name="Power Show"
+    compset="PowerComp"
+    marginhorz="3"
+    marginvert="1">
+
+    <portal
+      id="name"
+      style="lblSmall">
+      <label>
+        <labeltext><![CDATA[
+          if (tagis[component.vcPower] = 1) then
+            @text = "Power: "
+          elseif (tagis[component.vcSpecEff] = 1) then
+            @text = "Special Effect: "
+          elseif (tagis[component.vcDrawback] = 1) then
+            @text = "Drawback: "
+          elseif (tagis[component.vcCollDmg] = 1) then
+            @text = "Collateral Damage: "
+            endif
+            
+          @text &= field[name].text
+          ]]></labeltext>
+        </label>
+      </portal>
+      
+	<portal
+	  id="domain"
+	  style="editNormal">
+	  <edit
+	    field="domDomain">
+	    </edit>
+	  </portal>
+	        
+     <portal
+      id="enhEdit"
+      style="actEdit"
+      tiptext="Edit Powers">
+      <action
+        action="edit"
+        buttontext="">
+        </action>
+      </portal>
+          
+    <portal
+      id="info"
+      style="actInfo">
+      <action
+        action="info">
+        </action>
+      <mouseinfo/>
+      </portal>
+      
+    <portal
+      id="delete"
+      style="actDelete"
+      tiptext="Click to delete this item">
+      <action
+        action="delete">
+        </action>
+      </portal>
+
+    <position><![CDATA[
+    
+      ~set up our height based on our tallest portal
+      height = portal[enhEdit].height
+
+      ~if this is a "sizing" calculation, we're done
+      doneif (issizing <> 0)
+
+      ~position our tallest portal at the top
+      portal[name].top = 0
+      portal[name].left = 0
+      
+      ~center the other portals vertically
+      perform portal[enhEdit].centervert
+      perform portal[info].centervert
+      perform portal[domain].centervert
+      perform portal[delete].centervert
+
+      ~position the delete portal on the far right
+      perform portal[delete].alignedge[right,0]
+      
+      ~position the info portal to the left of the delete button
+      perform portal[info].alignrel[rtol,delete,-5]
+      
+      ~position the edit portal to the left of the delete
+      portal[enhEdit].visible = tagis[component.vcPower]
+      
+      perform portal[enhEdit].alignrel[rtol,info,-5]
+        
+      var remWidth as number
+      remWidth = portal[enhEdit].left - 5
+      
+      ~position the name on the left
+      portal[name].left = 0
+      ~portal[name].width = remWidth/2
+      ~portal[name].width = minimum(portal[name].width,portal[enhEdit].left - 5)
+
+	  ~if we don't need a domain, hide it and let the name use all available space
+	  if (tagis[User.NeedDomain] = 0) then
+  	    portal[domain].visible = 0
+	    portal[name].width = minimum(portal[name].width,portal[enhEdit].left - portal[name].left - 5)
+
+      ~otherwise, position the domain portals next to the name
+      else
+        perform portal[domain].alignrel[ltor,name,20]
+        portal[domain].width = 150
+        endif 
+
+
+
+        
+      ~if the ability is auto-added, change its font to indicate that fact
+      if (candelete = 0) then
+        perform portal[name].setstyle[lblAuto]
+        endif
+        
+      ~shrink the name to fit the available space if it's too big, then re-center
+      perform portal[name].sizetofit[6]
+      perform portal[name].centervert
+        
+      ]]></position>
+    </template>
+
+  <layout
+    id="layPower"
+    marginvert="4">
+    <portalref portal="prtPower" taborder="10"/>
+
+    <position><![CDATA[
+
+      ~position and size the table to span the full layout
+      ~portal[prtPower].left = 0
+      ~portal[prtPower].width = width
+      
+      ~position and size the table to span the full layout; it will only use the
+      ~vertical space that it actually needs
+      perform portal[prtPower].autoplace
+
+      ]]></position>
+    </layout>
+
+  <form
+	id="frmPower"
+	name="Powers"
+	marginhorz="10"
+	marginvert="5">
+	<layoutref layout="layPower"/>
+	<position><![CDATA[
+	  layout[layPower].width = 500
+	  perform layout[layPower].render
+	  width = layout[layPower].width
+	  height = 200
+	  ]]></position>
+	</form>
+
+  </document>

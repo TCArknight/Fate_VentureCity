@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains the definitions of components associated with traits such as
+      attributes, skills, special abilities, etc.
+-->
+
+<document signature="Hero Lab Structure">
+  <!-- Power component
+        Each Power derives from this component
+        
+        Power Suite
+        - 1 or more Powers
+          - 0 or more Enhancements
+        - 2 or more Special Effects
+        - Only 1 Drawback
+        - Only 1 Collateral Damage Effect
+  -->
+  <component
+    id="vcSuite"
+    name="Power Suite"
+    autocompset="no"
+    panellink="vcpower">
+
+    <!-- Suite Fields -->
+    <field
+      id="SuiteName"
+      name="Name"
+      type="user"
+      maxlength="100">
+      </field>
+
+    <field
+      id="SuiteDesc"
+      name="Description"
+      type="derived"
+      maxlength="1500">
+      </field>
+            
+    <field
+      id="SuiteExpr"
+      name="Tag Expression"
+      type="derived"
+      maxlength="500">
+      </field>
+      
+    <field
+      id="SuiteCost"
+      name="Cost in Stunts"
+      type="derived"
+      defvalue="0">
+      </field>
+      
+      
+    <!-- Each skill needs its own identity tag so existing skills can be identified during advancement -->
+    <identity group="vcSuite"/>
+    <identity group="HasSuite"/>
+
+    <!-- Track the skill on the actor -->
+    <eval index="1" phase="Setup" priority="500"><![CDATA[
+      perform forward[HasSuite.?]
+      ]]></eval>
+    
+    <!--  Set the Cost for the suite -->
+    <eval index="2" phase="PreTraits" priority="100"><![CDATA[
+            
+      ~The powers count as a Stunt.
+      herofield[acRefrStnt].value += field[SuiteCost].value     
+      
+      ]]></eval>
+    
+    <!--  Set the Cost for the suite -->
+    <eval index="3" phase="Render" priority="1000"><![CDATA[
+            
+      var infotext as string
+      var spacing as string
+      var showdesc as string
+      spacing = "{vert 20}"
+      showdesc = "true"
+      call PwrInfo
+      field[SuiteDesc].text = infotext     
+      
+      ]]></eval>
+      
+    <!-- set the appropriate candidate expression -->
+    <eval index="4" phase="Final" priority="1000" name="pwrHelp Expr">
+      <![CDATA[
+      
+      var myId as string
+      myId = tagids[Power.?," & "]
+      
+      ~doneif (empty(myId) <> 0)
+      call SetPwrExpr
+      ]]></eval> 
+      
+    <!-- set the livename to the domain -->
+    <eval index="5" phase="Final" priority="10000" name="Suite Name">
+      <![CDATA[
+      
+      var myId as string
+      myId = field[SuiteName].text
+      ~notify myId
+      
+      doneif (empty(myId) <> 0)
+      
+      field[livename].text = myId
+      ]]></eval>       
+    </component> 
+       
+  <!-- vcPower component
+        Each Power derives from this component
+  -->
+  <component
+    id="vcPower"
+    name="Power"
+    autocompset="no"
+    addbehavior="customize">
+    
+    <field
+      id="pwrDesc"
+      name="Power Description"
+      type="derived"
+      maxlength="1000">
+      </field>
+          
+    <field
+      id="Value1"
+      name="Value 1"
+      type="derived"
+      defvalue="0">
+      </field>
+    
+    <field
+      id="Value2"
+      name="Value 2"
+      type="derived"
+      defvalue="0">
+      </field>
+            
+    <!-- Each skill needs its own identity tag so existing skills can be identified during advancement -->
+    <identity group="Power"/>
+    <identity group="HasPower"/>
+    <identity group="Enhance"/>
+    <identity group="Drawback"/>
+
+    <tag group="PowerComp" tag="Power"/>
+	
+    <tag group="VenCity" tag="Power"/>
+    
+    <!-- Track the skill on the actor -->
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      perform forward[HasPower.?]
+      
+      ~The power costs as a Stunt. 
+      parent.field[SuiteCost].value += 1
+      
+      ~Copy descript field to pwrDesc
+      field[pwrDesc].text = field[descript].text
+
+      ]]></eval>
+      
+    <!-- set the appropriate candidate expression -->
+    <eval index="2" phase="Final" priority="1000" name="pwrHelp Expr">
+      <![CDATA[
+      
+      var myId as string
+      myId = tagids[Enhance.?," & "]
+      
+      ~notify myId
+      call SetEnhExpr
+      ]]></eval>      
+    </component>
+    
+  <component
+    id="pwrHelp"
+    name="Power Gizmo Helper">
+    
+    <!-- Selection Tag Expressions -->
+    <field
+      id="PowerExpr"
+      name="Power Tag Expression"
+      type="derived"
+      maxlength="500">
+      </field>
+      
+    <!-- set the appropriate candidate expression -->
+    <eval index="1" phase="Final" priority="1000" name="pwrHelp Expr">
+      <![CDATA[
+      
+      var myId as string
+      myId = tagids[PowerComp.?," | "]
+      myId &= tagids[HasPower.?," | "]
+      
+      doneif (empty(myId) <> 0)
+      call SetPwrExpr
+      ]]></eval>
+        
+    </component>
+     
+  <!-- vcEnhance component
+        Each Enhancement derives from this component
+  -->
+  <component
+    id="vcEnhance"
+    name="Enhancement"
+    autocompset="no"
+    addbehavior="customize">
+
+    <field
+      id="enhDesc"
+      name="Enhancement Description"
+      type="derived"
+      maxlength="1000">
+      </field>
+          
+    <field
+      id="enhValue1"
+      name="Value 1"
+      type="derived"
+      defvalue="0">
+      </field>
+    
+    <field
+      id="enhValue2"
+      name="Value 2"
+      type="derived"
+      defvalue="0">
+      </field>
+            
+    <!-- Each skill needs its own identity tag so existing skills can be identified during advancement -->
+    <identity group="HasEnhan"/>
+    
+    <!-- set the appropriate candidate expression -->
+    <eval index="1" phase="Final" priority="1000" name="enhHelp Expr">
+      <![CDATA[
+      
+      var myId as string
+      myId = tagids[Enhance.?," & "]
+      
+      ~call SetEnhExpr
+      ]]></eval>
+    
+    <!-- Track the skill on the actor -->
+    <eval index="3" phase="Setup" priority="5000"><![CDATA[
+      perform forward[HasEnhan.?]
+      
+      ~The power costs as a Stunt. 
+      parent.parent.field[SuiteCost].value += 1
+      
+      ~Copy descript field to pwrDesc
+      field[enhDesc].text = field[descript].text
+
+      ]]></eval>
+      
+    </component>
+    
+  <component
+    id="enhHelp"
+    name="Enhancement Gizmo Helper">
+    
+    <!-- Selection Tag Expressions -->
+    <field
+      id="EnhExpr"
+      name="Enhancement Tag Expression"
+      type="derived"
+      maxlength="500">
+      </field>
+
+    </component>
+     
+  <!-- vcSpecEff component
+        Each Special Effect derives from this component
+  -->
+  <component
+    id="vcSpecEff"
+    name="Special Effect"
+    autocompset="no"
+    addbehavior="customize">
+
+    <field
+      id="sfxDesc"
+      name="Enhancement Description"
+      type="derived"
+      maxlength="1000">
+      </field>
+          
+    <field
+      id="sfxValue1"
+      name="Value 1"
+      type="derived"
+      defvalue="0">
+      </field>
+    
+    <field
+      id="sfxValue2"
+      name="Value 2"
+      type="derived"
+      defvalue="0">
+      </field>
+            
+    <!-- Each Special effect needs its own identity tag so existing items can be identified during advancement -->
+    <identity group="HasSFX"/>
+
+    <tag group="PowerComp" tag="SpecEff"/>
+    
+    <!-- Track the skill on the actor -->
+    <eval index="3" phase="Setup" priority="5000"><![CDATA[
+      perform forward[HasSFX.?]
+      
+      var sfxCnt as number
+      
+      sfxCnt = parent.tagcount[HasSFX.?]
+      
+      if (sfxCnt > 2) then
+        ~The every 2 Effects costs a Stunt. 
+        parent.field[SuiteCost].value += .5
+        endif
+      
+      if (tagis[SpecEff.Improved] <> 0) then
+        ~An Improved Special Effect costs as a Stunt. 
+        parent.field[SuiteCost].value += 1
+        endif
+      
+      ~Copy descript field to pwrDesc
+      field[sfxDesc].text = field[descript].text
+
+      ]]></eval>
+      
+    </component>
+        
+  <component
+    id="sfxHelp"
+    name="Effect Gizmo Helper">
+            
+    <!-- Selection Tag Expressions -->
+    <field
+      id="sfxExpr"
+      name="Effect Tag Expression"
+      type="derived"
+      maxlength="500">
+      </field>
+
+    </component>
+    
+  <!-- vcSpecEff component
+        Each Special Effect derives from this component
+  -->
+  <component
+    id="vcDrawback"
+    name="Drawback"
+    autocompset="no">
+
+    <field
+      id="draDesc"
+      name="Drawback Description"
+      type="derived"
+      maxlength="1000">
+      </field>
+            
+    <!-- Each Special effect needs its own identity tag so existing items can be identified during advancement -->
+    <identity group="HasDraw"/>
+
+    <tag group="PowerComp" tag="Drawback"/>
+    
+    <!-- Track the drawback on the actor -->
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      perform forward[HasDraw.?]
+      
+      ~Copy descript field to draDesc
+      field[draDesc].text = field[descript].text
+
+      ]]></eval>
+      
+    </component>
+
+  <!-- vcCollDmg component
+        Each Collateral Damage derives from this component
+  -->
+  <component
+    id="vcCollDmg"
+    name="Collateral Damage"
+    autocompset="no">
+     
+	<field
+      id="cdDesc"
+      name="Col. Damage Description"
+      type="derived"
+      maxlength="1000">
+      </field>	 
+	  
+    <!-- Each Special effect needs its own identity tag so existing items can be identified during advancement -->
+    <identity group="HasCollDmg"/>
+
+    <tag group="PowerComp" tag="CollDmg"/>
+    
+    <!-- Track the drawback on the actor -->
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      perform forward[HasCollDmg.?]
+
+	  ~Copy descript field to draDesc
+      field[cdDesc].text = field[descript].text
+
+      ]]></eval>
+      
+    </component>
+        
+  <component
+    id="draHelp"
+    name="Drawback Gizmo Helper">
+    </component>
+    
+  <component
+    id="colHelp"
+    name="Collateral Damage Gizmo Helper">
+    </component>
+
+  <component
+    id="PowerComp"
+    name="Power Component Helper"
+    autocompset="no">
+    </component>
+
+  <component
+    id="xTracker"
+    name="Copy Tracker">
+    
+    <!-- Selection Tag Expressions -->
+    <field
+      id="xIndex"
+      name="Index of Copy"
+      type="user"
+      defvalue="0">
+      </field>
+      
+    <field
+      id="xCount"
+      name="Number of Copies"
+      type="user"
+      defvalue="0">
+      </field>
+    
+    <!-- Track the skill on the actor -->
+    <eval index="1" phase="Setup" priority="100"><![CDATA[
+      doneif (ispick = 0)
+      
+      ~perform assign[VenCity.FirstCopy]
+
+      ]]></eval>
+      
+    </component>
+               
+  <!-- Suite - all power suites derive from this compset -->
+  <compset
+    id="vcSuite">
+    <compref component="vcSuite"/>
+    <compref component="Domain"/>
+    <compref component="CanAdvance"/>
+    </compset>
+    
+  <!-- Power - all powers derive from this compset -->
+  <compset
+    id="Power">
+    <compref component="vcPower"/>
+    <compref component="xTracker"/>
+    <compref component="PowerComp"/>
+    <compref component="Domain"/>
+    <compref component="Custom"/>
+    </compset>
+    
+  <compset
+    id="Enhance">
+    <compref component="vcEnhance"/>
+    <compref component="xTracker"/>
+    <compref component="Domain"/>
+    <compref component="Custom"/>
+    </compset>
+
+    
+  <compset
+    id="SpecEff">
+    <compref component="vcSpecEff"/>
+    <compref component="xTracker"/>
+    <compref component="PowerComp"/>
+    <compref component="Domain"/>
+    <compref component="Custom"/>
+    </compset>
+    
+  <compset
+    id="Drawback">
+    <compref component="vcDrawback"/>
+    <compref component="xTracker"/>
+    <compref component="PowerComp"/>
+    <compref component="Domain"/>
+    <compref component="Custom"/>
+    </compset>
+    
+  <compset
+    id="CollDmg">
+    <compref component="vcCollDmg"/>
+    <compref component="xTracker"/>
+    <compref component="PowerComp"/>
+    <compref component="Domain"/>
+    <compref component="Custom"/>
+    </compset>
+            
+  <compset
+    id="PowerComp">
+    <compref component="PowerComp"/>
+    <compref component="Domain"/>
+    <compref component="Custom"/>
+    </compset>  
+                  
+  <!-- entities -->
+  <entity
+    id="entPower"
+    form="frmPower">
+    <bootstrap thing="PwrHelper"/>
+    </entity>    
+
+  <entity
+    id="entEnhance"
+    form="frmEnhance">
+    <bootstrap thing="EnhHelper"/>
+    </entity>
+         
+  </document>

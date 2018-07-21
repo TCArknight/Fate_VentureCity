@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- This file contains the assortment of skills for the game system. Note that each
+      skill is linked to an associated attribute for the character. This linkage allows
+      the value of the skill to easily incorporate the effects of the linked attribute
+      via a script on the component.
+-->
+
+<document signature="Hero Lab Data">
+  <!-- Separator Components -->
+  <thing
+    id="SepCollDmg"
+    name="- Collateral Damage -"
+    compset="PowerComp"
+    isshowonly="yes"
+    description="">
+    <tag group="PowerComp" tag="CollDmg"/>
+    <tag group="VenCity" tag="Seperate"/>
+    </thing>
+
+  <!-- Collateral Damages -->        
+  <thing
+    id="cdEscPlan"
+    name="Escape Plan"
+    compset="CollDmg"
+    description="Wherever you are, whatever the situation, you can summon a vehicle, such as a car or helicopter, to take you and your allies to safety. Generally speaking, this vehicle will arrive by crashing through a wall or the ceiling.">
+    <tag group="PowerComp" tag="CollDmg"/>
+    <tag group="VenCity" tag="CollDmg"/>
+    <tag group="CollDmg" tag="pwrMacCon"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>    
+  <thing
+    id="cdComeMe"
+    name="Come to Me!"
+    compset="CollDmg"
+    description="No matter where you are, the animals around you can hear your call and will come running to your side, even if they need to break down doors or walls to get there. You can summon a large group of your favored animal to your zone as an action.">
+    <tag group="PowerComp" tag="CollDmg"/>
+    <tag group="VenCity" tag="CollDmg"/>
+    <tag group="CollDmg" tag="pwrAniCon"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+  <thing
+    id="cdDirCont"
+    name="Direct Control"
+    compset="CollDmg"
+    description="If you can touch an animal of your favored type, you can possess it. Your body turns to smoke and pours into the animal, and you gain an aspect with the same name as the animal. This may frighten or unnerve the people who saw you disappear, or you might cause damage by maneuvering an unfamiliar body. The effect lasts until you end it or at the end of the scene. When the effect ends, you return to your original body and lose the animal aspect">
+    <tag group="PowerComp" tag="CollDmg"/>
+    <tag group="VenCity" tag="CollDmg"/>
+    <tag group="CollDmg" tag="pwrAniCon"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+  <thing
+    id="cdDraEnt"
+    name="Dramatic Entrance"
+    compset="CollDmg"
+    description="When your creature comes into the scene, it does so with gusto, possibly by breaking through a skylight or appearing in a burst of eldritch flames. However it arrives, it can show up in any zone, and it immediately attacks any one target in that zone with a +4 bonus.">
+    <tag group="PowerComp" tag="CollDmg"/>
+    <tag group="VenCity" tag="CollDmg"/>
+    <tag group="CollDmg" tag="pwrCreaSum"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+  <thing
+    id="cdNobSac"
+    name="Noble Sacrifice"
+    compset="CollDmg"
+    description="If your creature is within one zone of you, it can leap to your defense. If you would take any physical stress, your creature moves to your zone and takes it instead. Of course, even if the creature survives the attack, it will almost certainly have knocked things around in its scramble.">
+    <tag group="PowerComp" tag="CollDmg"/>
+    <tag group="VenCity" tag="CollDmg"/>
+    <tag group="CollDmg" tag="pwrCreaSum"/>
+    <tag group="Power" tag="NoDesc"/>
+    </thing>
+	
+	
+	</document>

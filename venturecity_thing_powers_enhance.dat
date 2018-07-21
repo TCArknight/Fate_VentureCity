@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- This file contains the assortment of skills for the game system. Note that each
+      skill is linked to an associated attribute for the character. This linkage allows
+      the value of the skill to easily incorporate the effects of the linked attribute
+      via a script on the component.
+-->
+
+<document signature="Hero Lab Data">
+
+  <!-- Enhancements -->    
+  <thing
+    id="enhMastAC"
+    name="Master Animal Control"
+    compset="Enhance"
+    isunique="no"
+    description="You can be very convincing when talking with your animal friends. Gain an additional +2 bonus to Rapport when asking an animal to do something for you.">
+    <tag group="VenCity" tag="Enhance"/>
+    <tag group="Enhance" tag="pwrAniCon"/>
+    <tag group="Power" tag="NoDesc"/>
+    <eval index="1" phase="PreTraits" priority="1000"><![CDATA[
+            
+      ~The powers count as a Stunt.
+      parent.field[Value1].value += 1    
+      
+      ]]></eval>
+    </thing>
+    
+  <thing
+    id="enhZooPoly"
+    name="Zoological Polyglot"
+    compset="Enhance"
+    isunique="no"
+    description="You may speak to any animal as if it were a human NPC. However, your bonus to Rapport only applies to your favored type of animal.">
+    <tag group="VenCity" tag="Enhance"/>
+    <tag group="Enhance" tag="pwrAniCon"/>
+    <tag group="Power" tag="NoDesc"/>
+    <eval index="1" phase="PreTraits" priority="1000"><![CDATA[
+            
+      ~The powers count as a Stunt.
+      parent.field[Value1].value += 1    
+      
+      ]]></eval>
+    </thing>
+  
+  <thing
+    id="enhAniTele"
+    name="Animal Telepathy"
+    compset="Enhance"
+    isunique="no"
+    description="You can communicate with animals of your favored type telepathically. In addition, you are aware when animals of that type are around you, even if you can’t see or otherwise sense them.">
+    <tag group="VenCity" tag="Enhance"/>
+    <tag group="Enhance" tag="pwrAniCon"/>
+    <tag group="Power" tag="NoDesc"/>
+    <eval index="1" phase="PreTraits" priority="1000"><![CDATA[
+            
+      ~The powers count as a Stunt.
+      parent.field[Value1].value += 1    
+      
+      ]]></eval>
+    </thing>
+  <thing
+    id="enhCreaSum"
+    name="Master Creature Summoning"
+    compset="Enhance"
+    isunique="no"
+    description="Your summoned creature gains an additional Good (+3) skill.">
+    <tag group="VenCity" tag="Enhance"/>
+    <tag group="Enhance" tag="pwrCreaSum"/>
+    <tag group="Power" tag="NoDesc"/>
+    <eval index="1" phase="PreTraits" priority="1000"><![CDATA[
+            
+      ~The powers count as a Stunt.
+      parent.field[Value1].value += 1    
+      
+      ]]></eval>
+    </thing>
+  <thing
+    id="enhTouThi"
+    name="Tough Little Thing"
+    compset="Enhance"
+    isunique="yes"
+    description="Your summoned creature gains a severe consequence slot.">
+    <tag group="VenCity" tag="Enhance"/>
+    <tag group="Enhance" tag="pwrCreaSum"/>
+    <tag group="Power" tag="NoDesc"/>
+    <eval index="1" phase="PreTraits" priority="1000"><![CDATA[
+            
+      ~The powers count as a Stunt.
+      parent.field[Value1].value += 1    
+      
+      ]]></eval>
+    </thing>
+  <thing
+    id="enhMena"
+    name="Menagerie"
+    compset="Enhance"
+    isunique="no"
+    description="You can now summon two other creatures, each with a different aspect and skill. When you summon your creature, you can pick any one from your stable.">
+    <tag group="VenCity" tag="Enhance"/>
+    <tag group="Enhance" tag="pwrCreaSum"/>
+    <tag group="Power" tag="NoDesc"/>
+    <eval index="1" phase="PreTraits" priority="1000"><![CDATA[
+            
+      ~The powers count as a Stunt.
+      parent.field[Value1].value += 1    
+      
+      ]]></eval>
+    </thing>
+    
+  <thing
+    id="enhMTPort"
+    name="Teleportation Mastery"
+    compset="Enhance"
+    isunique="no"
+    description="You can move an additional zone when you teleport.">
+    <tag group="VenCity" tag="Enhance"/>
+    <tag group="Enhance" tag="pwrTPort"/>
+    <tag group="Power" tag="NoDesc"/>
+    <eval index="1" phase="PreTraits" priority="1000"><![CDATA[
+            
+      ~The powers count as a Stunt.
+      parent.field[Value1].value += 1    
+      
+      ]]></eval>
+    </thing>
+     
+  <thing
+    id="enhColTel"
+    name="Collective Teleportation"
+    compset="Enhance"
+    isunique="yes"
+    description="With a little effort you can teleport any human-sized target you touch. If the target resists, make an attack using Fight to grab them against their will.">
+    <tag group="VenCity" tag="Enhance"/>
+    <tag group="Enhance" tag="pwrTPort"/>
+    </thing>
+        
+  <thing
+    id="enhMacMas"
+    name="Machine Mastery"
+    compset="Enhance"
+    isunique="no"
+    description="You gain a +2 to Empathy checks when telling machines what to do.">
+    <tag group="VenCity" tag="Enhance"/>
+    <tag group="Enhance" tag="pwrMacCon"/>
+    <tag group="Power" tag="NoDesc"/>
+    <eval index="1" phase="PreTraits" priority="1000"><![CDATA[
+            
+      ~The powers count as a Stunt.
+      parent.field[Value1].value += 2    
+      
+      ]]></eval>
+    </thing>
+    
+  <thing
+    id="enhGadMas"
+    name="Master Gadgeteering"
+    compset="Enhance"
+    isunique="no"
+    description="You gain a +2 to Craft checks when repairing or building complex devices.">
+    <tag group="VenCity" tag="Enhance"/>
+    <tag group="Enhance" tag="pwrGadget"/>
+    <tag group="Power" tag="NoDesc"/>
+    <eval index="1" phase="PreTraits" priority="1000"><![CDATA[
+            
+      parent.field[Value1].value += 2    
+      
+      ]]></eval>
+    </thing> 
+  </document>

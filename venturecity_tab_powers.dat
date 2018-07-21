@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains the definition of the "Abilities" tab panel. This tab is where
+      the user selects the special abilities for the character.
+
+      All public visual elements used with this tab panel start with the prefix "ab"
+      to associate them with the tab.
+-->
+
+<document signature="Hero Lab Data">
+
+  <portal id="vcHeader" style="lblTitle">
+    <label>
+      <labeltext>
+        @text = "Powers"
+        </labeltext>
+      </label>
+    </portal>
+
+  <portal id="vcMove" style="lblNormal">
+    <label>
+      <labeltext>
+        @text = "Movement: " &amp; hero.child[resMove].field[resMax].value &amp; " Zones"
+        </labeltext>
+      </label>
+    </portal>
+      
+  <!-- vcSuite portal
+        Presents a dynamic table where the user can add power suites for the
+        character.
+  -->
+  <portal
+    id="vcSuite"
+    style="tblNormal">
+    <table_dynamic
+      component="vcSuite"
+      showtemplate="SuitePick"
+      choosetemplate="SimpleItem"
+      showfixedlast="yes">
+      <candidate>component.vcSuite</candidate>
+      <titlebar><![CDATA[
+        @text = "Add a Power Suite"
+        ]]></titlebar>
+      <description/>
+      <headertitle><![CDATA[
+        @text = "Power(s)"
+        ]]></headertitle>
+      <additem><![CDATA[
+        ~if we're in advancement mode, we've been frozen, so display accordingly
+        if (state.iscreate = 0) then
+          @text = "{text clrgrey}Add Form Via Advances Tab"
+          done
+          endif
+
+        ~set the color based on whether the proper number of slots are allocated
+        ~if (field[resLeft].value = 0) then
+        ~  @text = "{text clrgrey}"
+        ~elseif (field[resLeft].value < 0) then
+        ~  @text = "{text clrwarning}"
+        ~  endif
+        
+        @text &= "Add New Power Suite"
+        ]]></additem>
+      </table_dynamic>
+    </portal>
+    
+  <!-- abPick template
+        Displays the name of the pick/thing and an info button with the basic
+        description text. This is basically the "SimpleItem" template, with one
+        key difference. Auto-added abilities such as those conferred by races are
+        sorted and colored differently to distinguish their nature.
+  -->
+  <template
+    id="SuitePick"
+    name="Power Pick"
+    compset="vcSuite"
+    marginhorz="3"
+    marginvert="2">
+
+    <portal
+      id="lblName"
+      style="lblLarge"
+      showinvalid="yes">
+      <label>
+        <labeltext>
+          @text = "Power Name:"
+          </labeltext>
+        </label>
+      </portal>
+           
+    <portal
+      id="username"
+      style="editNormal">
+      <edit
+        field="SuiteName"
+        maxlength="100">
+        </edit>
+      </portal>
+       
+     <portal
+      id="lblDesc"
+      style="lblLeft"
+      showinvalid="yes">
+      <label ismultiline="yes">
+        <labeltext>
+          @text = field[SuiteDesc].text
+          </labeltext>
+        </label>
+      </portal>
+ 
+    <portal
+      id="delete"
+      style="actDelete"
+      tiptext="Click to delete this item">
+      <action
+        action="delete">
+        </action>
+      </portal>
+
+     <portal
+      id="lblCost"
+      style="lblNormal"
+      showinvalid="yes">
+      <label>
+        <labeltext>
+          @text = "Cost: " &amp; field[SuiteCost].text &amp; " stunts"
+          </labeltext>
+        </label>
+      </portal>
+      
+     <portal
+      id="pwrEdit"
+      style="actEditB"
+      tiptext="Edit Power Components">
+      <action
+        action="edit"
+        buttontext="Edit Power Components">
+        </action>
+      </portal> 
+
+    <position><![CDATA[
+      ~set up our height
+      portal[lblName].height = portal[delete].height + 2
+      portal[username].height = portal[lblName].height
+      portal[lblCost].height = portal[lblName].height
+      portal[pwrEdit].height = portal[lblName].height
+      
+      ~if this is a "sizing" calculation, we're done
+      ~doneif (issizing <> 0)
+
+      ~position the Suite Name at the top 
+      ~and the Username to the right taking the rest of available space
+      portal[delete].top = 0
+
+      portal[lblName].top = 0
+      portal[username].top = portal[lblName].top
+      perform portal[lblName].alignedge[left,0]
+
+      ~center the other portals vertically
+      ~perform portal[delete].centervert
+      perform portal[pwrEdit].centervert
+
+      ~position the delete portal on the far right
+      perform portal[delete].alignedge[right,0]
+
+      ~position the username portal next to the name  
+      portal[username].left = portal[lblName].right + 8
+      portal[username].width = 150
+
+      ~position the description portal below the name  
+      portal[lblDesc].top = portal[lblName].bottom + 5
+      perform portal[lblDesc].alignedge[left,0]
+      portal[lblDesc].height = 400
+      portal[lblDesc].width = portal[delete].left
+      
+      ~position the cost after Desc on the left
+      portal[lblCost].top = portal[lblDesc].bottom + 5
+      portal[lblCost].height = 25
+      portal[lblCost].width = portal[delete].left
+      perform portal[lblCost].alignedge[left,0]
+
+      ~position the edit portal as the last portal
+      portal[pwrEdit].visible = 1
+      portal[pwrEdit].top = portal[lblCost].bottom + 5
+      perform portal[pwrEdit].alignedge[left,5]
+      portal[pwrEdit].height = 25
+      portal[pwrEdit].width = width - 10
+      
+      height = portal[pwrEdit].bottom
+
+      ~if the ability is auto-added, change its font to indicate that fact
+      if (candelete = 0) then
+        perform portal[lblName].setstyle[lblAuto]
+        endif
+        
+      ]]></position>
+
+    </template>
+
+  <!-- Power layout
+        This layout sets the display of the visual elements that comprise
+        the Powers tab. This amounts to a title at the top and a dynamic table
+        below where the user can add the special abilities he wants.
+
+        The logic for this layout is similar to (albeit much simpler than) the
+        logic for the Basics tab. So please refer to the Basics tab for more details.
+  -->
+  <layout
+    id="vcpower">
+    <portalref portal="vcSuite" taborder="10"/>
+
+    <!-- This script sizes and positions the layout and its child visual elements. 
+    <portalref portal="vcHeader" taborder="5"/>
+    <portalref portal="vcMove" taborder="7"/>
+-->
+    <position><![CDATA[
+      ~freeze our table in advancement mode to disable adding new choices
+      ~Note: All freezing must be done *before* any positioning is performed.
+      if (state.iscreate = 0) then
+        portal[vcSuite].freeze = 1
+        endif
+
+      ~position and size the table to span the full layout; it will only use the
+      ~vertical space that it actually needs
+      ~perform portal[vcHeader].autoplace
+      ~perform portal[vcMove].autoplace[5]
+      ~perform portal[vcSuite].autoplace[20]
+      
+      perform portal[vcSuite].autoplace
+      ]]></position>
+
+    </layout>
+
+
+  <!-- Power panel
+        This is the "Powers" panel shown within Hero Lab. Since we want this
+        panel to appear after Basics and after the Skills and Stunts, we assign it
+        an "order" of 130.
+  -->
+  <panel
+    id="vcpower"
+    name="Powers"
+    marginhorz="5"
+    marginvert="5"
+    order="130">
+    <live>VenCity.Visible</live>
+    <layoutref layout="vcpower"/>
+    <position><![CDATA[
+      ]]></position>
+    </panel>
+  </document>

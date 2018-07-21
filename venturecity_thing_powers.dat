@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document signature="Hero Lab Data">
+  <thing id="SepPower" name="- Powers -" compset="PowerComp" isshowonly="yes">
+    <tag group="PowerComp" tag="Power"/>
+    <tag group="VenCity" tag="Seperate"/>
+    </thing>
+  <thing id="vcSuiteCus" name="-- New Power Suite --" description="Use this to add a Power Suite to the character." compset="vcSuite">
+    <evalrule phase="Validate" priority="8000" message="At least two Special Efects required."><![CDATA[
+      ~if we have 2 or more special effects we're good
+      validif (tagcount[HasSFX.?] >= 2)]]></evalrule>
+    <evalrule phase="Validate" priority="8000" index="2" message="An odd number of Effects selected, you can choose one more with no cost." severity="warning"><![CDATA[
+      ~if we have an even number of special effects greater than 2 we're good
+      validif (((tagcount[HasSFX.?] - 2)%2) = 0)]]></evalrule>
+    <child entity="entPower"></child>
+    </thing>
+  <thing id="pwrAniCon" name="Animal Control" description="{i}You can walk with the animals, talk with the animals, and fight with the animals on your side.{/i}{br}{br}Choose one favored type of animal. You may communicate with favored animals of this type as if they were human NPCs, although their understanding of the world is limited. In addition, you gain a +2 bonus to Rapport when asking an animal of that type to do something for you.{br}{br}&quot;Type&quot; is an intentionally broad category. It doesn’t necessarily line up with a taxonomic category, but rather how useful the animal is and how often you’ll see it. Only multicellular animals can be controlled; bacteria are too simple to order around. Some types of animals you might control include fish, birds, insects, rodents, and dogs.{br}{br}{b}Common Power Synergies{/b}{br}{b}Super Abilities:{/b} You can speak for animals and, in return, they have trained you, pushing you to the upper limits of human ability. You have Super Agility, Super Strength, Super Toughness, or Super Senses.{br}{br}{b}Influence:{/b} Humans are, after all, just another type of animal, albeit ones who are a little more complex to control." compset="Power" uniqueness="unique">
+    <tag group="User" tag="NeedDomain"/>
+    <child entity="entEnhance"></child>
+    </thing>
+  <thing id="pwrCreaSum" name="Creature Summoning" description="{i}You’ve always got someone, or something, to watch your back.{/i}{br}{br}Once per scene, you can generate a creature that’s under your control. You might bring forth an elemental, or something mundane like a sidekick shows up to help out. When you take this power, create a creature with one aspect to describe it and one Good (+3) skill. Your creature has two physical and mental stress boxes, and it can take mild and moderate consequences. Your creature will dissipate or wander away at the end of the scene, clearing its consequences.{br}{br}Your summoned creature is not an NPC, but another character under your control. When your creature is active during a conflict, it acts on your turn. Both of you take a free movement, but only one of you can take an action.{br}{br}{b}Common Power Synergies{br}Animal Control:{/b} You can call forth hordes of animals when you want to, but one specific animal is your special companion, always by your side.{br}{br}{b}Projection:{/b} The creature you call forth is an elemental avatar of fire, frost, electricity, or shadow." compset="Power" uniqueness="unique">
+    <tag group="User" tag="NeedDomain"/>
+    <child entity="entEnhance"></child>
+    </thing>
+  <thing id="pwrDisguis" name="Disguise" description="{i}Your ability to disguise yourself as another person is uncanny. Who are you, really?{/i}{br}{br}You can alter your face, build, and voice at will in order to become a completely different person. Once you spend time interacting with someone, you can imitate them near-perfectly. Gain a +2 bonus to Deception to oppose others trying to see through your disguise.{br}{br}{b}Common Power Synergies{br}Illusion:{/b} You aren’t actually altering your face; you’re just projecting a disguise over it, using your mastery of illusions.{br}{br}{b}Shape Shifting:{/b} Altering your face and body is good practice for your fine detail work, but you can change your entire shape when you need to." compset="Power" uniqueness="unique">
+    <child entity="entEnhance"></child>
+    </thing>
+  <thing id="pwrDuplic" name="Duplication" description="{i}You can be an entire team, all by yourself.{/i}{br}{br}Once per scene, you can create a copy of yourself up to one zone away. This copy has your aspects and skills, but it takes a -1 penalty to all rolls. The duplicate is not an NPC, but another character under your control. During a conflict, both you and your copy get a free movement, but only one of you can take an action. You may dismiss the copy at will, or it will fade away on its own at the end of the scene. Your duplicate has its own physical stress boxes and consequence slots for physical damage. If your duplicate would take mental stress, you take it instead.{br}{br}{b}Common Power Synergies{br}Teleportation:{/b} By creating a duplicate some distance away and then willing away your original body, your consciousness jumps into the spare body, effectively teleporting you. There are metaphysical concerns here, but you try not to think about them.{br}{br}{b}Energy Blast:{/b} You -- there’s no clean way to put this. You can try to create a copy of yourself inside someone else. It’s unsettling. But effectively it works like throwing a blast of energy at them." compset="Power" uniqueness="unique">
+    <child entity="entEnhance"></child>
+    </thing>
+  <thing id="pwrElastic" name="Elasticity" description="{i}You’ve got a body as stretchy as rubber and twice as resilient.{/i}{br}{br}Your body stretches to incredible lengths. By stretching yourself, you can interact with objects and make melee attacks in an adjacent zone without moving. Additionally, you can contort your body into rough approximations of animals, objects, and tools, although your mass doesn’t change and you still very much look like yourself.{br}{br}{b}Common Power Synergies{br}Super Toughness:{/b} Your body is a shifting, inconsistent mass of vague stuff. It’s hard for it to get hurt in a meaningful way.{br}{br}{b}Disguise:{/b} With a little careful manipulation, you can reshape your face, body, and even voice into convincing facsimiles of someone else’s.{br}{br}{b}Natural Weapon:{/b} Your elastic arms can turn into blades, hammers, clubs -- all manner of built-in weaponry." compset="Power" uniqueness="unique">
+    <child entity="entEnhance"></child>
+    </thing>
+  <thing id="pwrFlight" name="Flight" description="{i}For many people, flight is the reason to activate their super gene. You are one of the lucky ones, able to take to the air as easily as most citizens walk down the street.{/i}\n\nYou can move vertically through the air as easily as moving along the ground. Use Athletics to overcome obstacles or create advantages related to flying.\n\n{B}Common Power Synergies{/B}\n{b}Super Speed:{/b} Without the ground to slow you down, you can get where you need to go in a hurry." compset="Power" uniqueness="unique">
+    <usesource source="srcVenCity"/>
+    <child entity="entEnhance"></child>
+    </thing>
+  <thing id="pwrGadget" name="Gadgeteering" description="{i}You have special insight into how stuff works, letting you assemble incredible devices with seemingly no resources.{/i}\n\nYou have an intuitive understanding of machines of all types. Just by seeing a device, you can tell what it does, at least in general. In addition, you gain +MYVAL to Crafts when repairing or building complex devices.\n\n{b}Common Synergies{/b}\n{b}Super Gadgeteering:{/b} Virtually any power can become an ability that you have thanks to a gadget you have created. You might have jetpack-powered Flight, a device which lets you Phase through walls, or a ray to create energy Shields. Even though these powers come from devices, the devices only work because of your superhuman craft, so they can be affected as standard powers can by Power Amplification, Power Nullification, and other means.\n\n{b}Technology:{/b} Your mechanical aptitude is superior, but it’s not quite superhuman. Likewise, the devices you create aren’t super-gadgets, just bleeding-edge pieces of tech." compset="Power" uniqueness="unique">
+    <fieldval field="Value1" value="2"/>
+    <usesource source="srcVenCity"/>
+    <eval phase="Final"><![CDATA[
+      trustme
+      var str as string
+      var temp as string
+      var myVal as number
+      
+      myVal = field[Value1].value
+      
+      str = field[pwrDesc].text
+      temp = replace(str,"MYVAL",myVal,0)
+            
+      field[pwrDesc].text = temp]]></eval>
+    <child entity="entEnhance"></child>
+    </thing>
+  <thing id="pwrMacCon" name="Machine Control" description="You can control machines up to one zone away without touching them, using Empathy with a +MYVAL bonus" compset="Power" uniqueness="unique">
+    <eval phase="Final"><![CDATA[
+      trustme
+      var str as string
+      var temp as string
+      var myVal as number
+      
+      myVal = field[Value1].value
+      
+      str = field[pwrDesc].text
+      temp = replace(str,"MYVAL",myVal,0)
+            
+      field[pwrDesc].text = temp]]></eval>
+    <child entity="entEnhance"></child>
+    </thing>
+  <thing id="pwrTPort" name="Teleport" description="You can move up to MYVAL zones as an action, provided you can see where you are moving to." compset="Power" uniqueness="unique">
+    <fieldval field="Value1" value="3"/>
+    <eval phase="Final"><![CDATA[
+      trustme
+      var str as string
+      var temp as string
+      var myVal as number
+      
+      myVal = field[Value1].value
+      
+      str = field[pwrDesc].text
+      temp = replace(str,"MYVAL",myVal,0)
+            
+      field[pwrDesc].text = temp]]></eval>
+    <child entity="entEnhance"></child>
+    </thing>
+  <thing id="pwrEnerAbs" name="Energy Absorption" description="{i}You are a human capacitor, able to absorb pure energy into your body and release it at will.{/i}\n\nYou may use Physique, with a +2 bonus, to defend against any energy-based attack and to overcome energy-based obstacles, simply by absorbing the energy into your body. Energy-based threats include electricity—such as stun guns and tasers—radiation, fire, and most super-powered blasts; in short, things that can hurt you but aren’t solid objects.\n\n{b}Common Power Synergies{/b}\n{b}Energy Blast:{/b} The energy you absorb doesn’t bleed away slowly; you release it with force. As an energy blaster, you can shoot out energy of the same type that you most recently absorbed.\n\n{b}Harm:{/b} People need energy to live, and you can take grim advantage of this fact by draining it out of them.\n\n{b}Super Toughness:{/b} Kinetic energy is energy too, after all. You can’t stop a physical attack, but you can slow it enough that it doesn’t hurt so bad." compset="Power">
+    <usesource source="srcVenCity"/>
+    </thing>
+  <thing id="pwrEnerBl" name="Energy Blast" description="{i}A classic power with innumerable variations: you can shoot stuff. Lasers from your eyes, fire from your fists, things like that.{/i}\n\nYou can fire a projectile of some sort, with a range of MYVAL zones, using Shoot.\n\n{b}Common Power Synergies{/b}\n{b}Projection:{/b} What you fire isn’t just a blast of undifferentiated energy; it’s a specific element. Pick from Fire Projection, Electricity Projection, Frost Projection, or Shadow Projection.\n\n{b}Item Summoning{/b} You aren’t throwing pure energy; you’re just throwing stuff that you pull out of thin air.\n\n{b}Flight:{/b} Basic physics. Point your energy blasts down, and you go up!" compset="Power">
+    <fieldval field="Value1" value="3"/>
+    <usesource source="srcVenCity"/>
+    <eval phase="Final"><![CDATA[
+      trustme
+      var str as string
+      var temp as string
+      var myVal as number
+      
+      myVal = field[Value1].value
+      
+      str = field[pwrDesc].text
+      temp = replace(str,"MYVAL",myVal,0)
+            
+      field[pwrDesc].text = temp]]></eval>
+    <child entity="entEnhance"></child>
+    </thing>
+  <thing id="pwrHarm" name="Harm" description="{i}You have a deadly touch. You don’t have to hit people to hurt them; just brushing up against them can be fatal.{/i}\n\nBy maintaining skin-to-skin contact with another person for a moment, you deal them MYVAL physical stress. Additionally, when you attack a target using your bare hands, add MYVAL physical stress to result.\n\n{b}Common Power Synergies{/b}\n{b}Healing{/b} It’s not unusual for someone with your power to trade damage for healing or vice versa." compset="Power">
+    <fieldval field="Value1" value="2"/>
+    <usesource source="srcVenCity"/>
+    <eval phase="Final"><![CDATA[
+      trustme
+      var str as string
+      var temp as string
+      var myVal as number
+      
+      myVal = field[Value1].value
+      
+      str = field[pwrDesc].text
+      temp = replace(str,"MYVAL",myVal,0)
+            
+      field[pwrDesc].text = temp]]></eval>
+    <child entity="entEnhance"></child>
+    </thing>
+  <thing id="pwrHealing" name="Healing" description="{i}You are, invariably, the most popular person to have on hand during a fight. You make hurt people not hurt so much.{/i}\n\nYou can make a Will roll against Fair (+2) opposition to clear another character’s physical stress. A character may only benefit from your ability once per scene. Additionally, you can use Will to start healing any kind of physical consequence on another character.\n\n{b}Common Power Synergies{/b}\n{b}Regeneration{/b} Most doctors can’t operate on themselves, but there’s no reason you can’t turn your power inward.\n\n{b}Harm{/b} Medicine and poison are the same thing, really. It’s all about the proportions." compset="Power">
+    <usesource source="srcVenCity"/>
+    <child entity="entEnhance"></child>
+    </thing>
+  <thing id="pwrIllusi" name="Illusion" description="{i}You can make things that aren’t there…there.{/i}\n\nYou can project an illusory image, up to about human size, as far as one zone away. You can also generate sounds, including voices. You must concentrate to keep the illusion active. Others must actively try to see through your illusion. This is an overcome roll using Investigate, which you actively oppose using Deceive.\n{b}Common Power Synergies{/b}\n{b}Regeneration{/b} Most doctors can’t operate on themselves, but there’s no reason you can’t turn your power inward.\n\n{b}Harm{/b} Medicine and poison are the same thing, really. It’s all about the proportions." compset="Power">
+    <usesource source="srcVenCity"/>
+    <child entity="entEnhance"></child>
+    </thing>
+  <thing id="pwrInfluen" name="Influence" description="{i}You are a natural people person—whether people like it or not. You can’t control minds outright, but you can make them malleable.{/i}\n\nYou can use Rapport to attack, defended against with Will. If you succeed against a nameless NPC, you may give them a task, which they will then attempt to fulfill. Against a named NPC or a PC, they may follow your order or take mental stress from the attack, their choice. Anyone you give a task to will try their best to accomplish it until they succeed or the scene ends, whichever comes first. The tasks you assign are short-term objectives, such as “Give me that gun,” or “Go away.” Because even the weakest-willed are driven by self-preservation, you cannot force someone to directly harm themself or put themself in an inevitably fatal position, such as jumping off a building, but you can force them to take riskier actions than they would like to.\n\n\n\n{b}Harm{/b} Medicine and poison are the same thing, really. It’s all about the proportions." compset="Power">
+    <usesource source="srcVenCity"/>
+    <child entity="entEnhance"></child>
+    </thing>
+  <thing id="pwrInvis" name="Invisibility" description="{i}Sorry, who said that?{/i}\n\nYou can completely fade from view, including your clothes and anything you’re carrying. Cameras and similar devices cannot detect you at all, and you gain +2 to Stealth against being seen by living targets." compset="Power">
+    <usesource source="srcVenCity"/>
+    <child entity="entEnhance"></child>
+    </thing>
+  <thing id="pwrItmSumm" name="Item Summoning" description="{i}You always have what you need close at hand.{/i}\n\nYou can create simple items, such as hand tools or weapons, just by willing them into existence. If you want something with no moving parts that you can hold in one hand, roll Will against Average (+1) opposition; larger or more complex items will increase that opposition. While the item you summon can have multiple parts—for instance, a sack of marbles—you can’t summon electronic gadgets, explosives, or items that require precise manufacturing, like firearms. You may only summon one item at a time, but you can summon as often as you’d like. Increase the opposition by +2 for every other item summoned by you in the scene. You can cause summoned objects to dissipate at will, but they’ll disappear on their own after a few minutes or the end of the scene, whichever comes first." compset="Power">
+    <usesource source="srcVenCity"/>
+    <child entity="entEnhance"></child>
+    </thing>
+  </document>

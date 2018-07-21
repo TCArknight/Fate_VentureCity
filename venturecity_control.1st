@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- This file contains the definitions of assorted procedures that are used
+      throughout the data files. Since procedures are typically called from multiple
+      places, it usually makes sense to put them all in one central location where
+      you can always find them instead of having them littered throughout the data
+      files and hard to locate when you need to refer to them.
+  -->
+
+<document signature="Hero Lab Structure">
+
+  <!-- Define a sortset for showing Power Components -->
+  <sortset
+    id="PowerComp"
+    name="Power Components By Type and Name">
+    <sortkey isfield="no" id="PowerComp"/>
+    <sortkey isfield="no" id="_Name_"/>
+    </sortset>
+        
+  </document>

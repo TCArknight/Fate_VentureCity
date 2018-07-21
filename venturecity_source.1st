@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document signature="Hero Lab Structure">
+  <loadonce key="Venture City Core Sources"/>
+
+<!--
+
+January 30, 2016 - Thomas Clegg (TCArknight)
+-Created New
+
+-->
+
+  <!-- ============================================== -->
+  <!-- SOURCES                                        -->
+  <!-- ============================================== -->
+
+  <!-- 
+    This is the primary Parent Source for Venture City. Every other "parent" source will build upon this one.
+  -->
+  <source
+    id="srcVenCity"
+    name="Venture City"
+    selectable="yes"
+    parent="UserParent"
+    sortorder="1"
+    description="Venture City Setting from Evil Hat.">
+  </source>
+
+</document>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document signature="Hero Lab Data">
+
+  <!-- Resource to track the number of powers -->
+  <thing
+    id="resVCPower"
+    name="Powers"
+    compset="Resource">
+
+    <!-- Automatically add the resource to every actor -->
+    <tag group="Helper" tag="Bootstrap"/>
+
+    <!-- Do NOT require this resource to be fully utilized -->
+    <tag group="Helper" tag="NoMinimum"/>
+
+    <!-- Use the starting XP plus the accrued XP as our maximum -->
+    <eval index="1" phase="Setup" priority="1000"><![CDATA[
+      field[resMax].value = 0
+      ]]></eval>
+    </thing>
+    
+  <!-- Movement resource to track the zones of movement -->
+  <thing
+    id="resMove"
+    name="Move"
+    compset="Resource">
+
+    <!-- Automatically add the resource to every actor -->
+    <tag group="Helper" tag="Bootstrap"/>
+
+    <!-- Do NOT require this resource to be fully utilized -->
+    <tag group="Helper" tag="NoMinimum"/>
+
+    <!-- Use the starting XP plus the accrued XP as our maximum -->
+    <eval index="1" phase="Setup" priority="1000"><![CDATA[
+      field[resMax].value = 0
+      ]]></eval>
+    </thing>
+
+    
+  <!-- Entity Helpers -->
+  <thing
+    id="PwrHelper"
+    name="Power Helper"
+    compset="pwrHelp"
+    description="Helper for the Power entity">
+    </thing>
+
+  <thing
+    id="EnhHelper"
+    name="Enhancement Helper"
+    compset="enhHelp"
+    description="Helper for the Enhancement entity">
+    </thing>
+
+  <thing
+    id="SFXHelper"
+    name="Special Effect Helper"
+    compset="sfxHelp"
+    description="Helper for the Special Effect entity">
+    </thing>
+
+  <thing
+    id="DraHelper"
+    name="Drawback Helper"
+    compset="draHelp"
+    description="Helper for the Drawback entity">
+    </thing>
+
+  <thing
+    id="ColHelper"
+    name="Power Helper"
+    compset="colHelp"
+    description="Helper for the Collateral Damage entity">
+    </thing>
+    
+  </document>
